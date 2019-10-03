@@ -1,0 +1,58 @@
+<div class="req" role="listbox">
+        <div class="item active">
+
+            <div class=" text-center projs" >
+       <!-- <h1>Project Videos</h1> -->
+
+            </div>
+          </div>
+		</div>
+
+<style>
+	.ValidationErrors { color:red !important; font-size:15px; }
+</style>
+
+<section>
+<div class="container jobforms-req">
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 modal-content">
+		<div class="modal-header">
+		<h2 class="title-4">Certificate Request Form</h2>
+		</div>
+			<?php echo $this->Session->flash(); ?>
+			<?php $disabled = true; ?>
+			
+		<br>
+		<?php echo $this->Form->create('Jobplacements', array('action'=>'junior','type' => 'file','id'=>'app'))?>
+		<?php if(isset($id)) echo $this->Form->input('id',array('type' => 'hidden', 'value' => $id)); ?>
+		<div class="form-group">
+			<p class="space1">Career Of Interest</p>
+			<?php echo $this->Form->input('career',array('div'=>false,'label'=>false,'class' => 'form-control', 'type'=>'select','options'=> array('System Administration' => 'System Administration', 'DevOps' => 'DevOps','Architecture'=>'Architecture', 'QA' => 'QA', 'Cloud Administration', 'Database' => 'Database', 'Java Development' => 'Java Development','Python Development'=>'Python Development','CyberSecurity Analysis' => 'CyberSecurity Analysis')));?>
+		</div>
+		<div class="form-group">
+			<p class="space1">Do you have certificate in the field of interest?</p>
+			<?php echo $this->Form->input('certification',array('div'=>false,'label'=>false,'class' => 'form-control required', 'type'=>'select','options'=> array('Yes'=>'Yes','No'=>'No')));?>
+		</div>
+		<div class="form-group">
+			<p class="space1">If yes, please upload the certificate</p>
+			<div id="resume" class=""><?php echo $this->Form->input('certificate',array('type' => 'file', 'label'=>false));?></div>
+		</div>
+		<div class="form-group">
+			<p class="space1">Have you had any training in this field? </p>
+			<?php echo $this->Form->input('training',array('div'=>false,'label'=>false,'class' => 'form-control required', 'type'=>'select','options'=> array('Yes'=>'Yes','No'=>'No')));?>
+		</div>
+		
+		<div class="form-group">
+			<p class="space1">Are u willing to relocate?</p>
+			<?php echo $this->Form->input('Williness',array('div'=>false,'label'=>false,'class' => 'form-control required', 'type'=>'select','options'=> array('Yes'=>'Yes','No'=>'No')));?>
+		</div>
+		<div class="sldbtnd">
+		<?php echo $this->Form->submit('Submit',array('div'=>false,'label'=>false, 'class' => 'btn btn-primary get', 'id'=>'but','value'=>'Submit'));?>	
+		</div><br>
+		</div>
+
+		<div class="col-md-2"></div>
+	</div>
+</div>
+</section>

@@ -1,0 +1,91 @@
+{% extends 'home/base.html' %}
+{% block content %}
+
+<div class="req" role="listbox">
+        <div class="item active">
+
+            <div class=" text-center projs" >
+       <!-- <h1>Project Videos</h1> -->
+
+            </div>
+          </div>
+		</div>
+
+<style>
+	.ValidationErrors { color:red !important; font-size:15px; }
+</style>
+
+<section>
+<div class="container jobforms-req">
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 modal-content">
+		<div class="modal-header">
+		<h2 class="title-4">Experience Request Form</h2>
+		</div>
+			
+			
+		<br>
+		
+		<div class="form-group">
+			<p class="space1">Career Of Interest</p>
+			<select class="form-control" id="sel1">
+					<option>System Administration</option>
+					<option>DevOps</option>
+					<option>Architecture</option>
+					<option>QA</option>
+					<option>Cloud Administration</option>
+					<option>Database</option>
+					<option>Java Development</option>
+					<option>Python Development</option>
+					<option>CyberSecurity Analysis</option>
+				</select>
+		</div>
+		<div class="form-group">
+			<p class="space1">Years Of Experience</p>
+			<select class="form-control" id="sel1">
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+					<option>6</option>
+					<option>7</option>
+				</select>
+		</div>
+		<div class="form-group">
+			<p class="space1">Do you have certificate in the field of interest?</p>
+			<select class="form-control" id="sel1">
+					<option>Yes</option>
+					<option>No</option>
+				</select>
+		</div>
+		<div class="form-group">
+			<p class="space1">Have you had any Training in this field?</p>
+			<select class="form-control" id="sel1">
+					<option>Yes</option>
+					<option>No</option>
+				</select>
+		</div>
+		
+		<div class="form-group">
+			<p class="space1">Are u willing to relocate?</p>
+			<select class="form-control" id="sel1">
+					<option>Yes</option>
+					<option>No</option>
+				</select>
+		</div>
+		<a href="{% url 'home:required' %}">
+		<div class="sldbtnd">
+			<input type="submit" class="btn btn-primary get" value="Submit" style="background-color: #005EA6; width: 80px; height: 40px; font-size: 14px; border-radius: 34px;!important">
+		</div></a>
+		<br>
+		</div>
+
+		<div class="col-md-2"></div>
+	</div>
+</div>
+</section>
+
+{% endblock %}

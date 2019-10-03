@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+	<link href="{% static 'faq/css/reset.css' %}" rel="stylesheet">
+    <link href="{% static 'faq/css/faq_style.css' %}" rel="stylesheet">
+
+	
+
+	<script src="{% static 'faq/js/modernizr.js' %}"></script>
+	<title>FAQ | Linuxjobber</title>
+</head>
+<body>
+<section class="cd-faq">
+
+
+	{% for q_and_a in faqs %}
+                
+            
+	<div class="cd-faq-items">
+	
+	<ul id="basics" class="cd-faq-group">
+			<li>
+
+	<a class="cd-faq-trigger" href="#0">{{ q_and_a.question  }}</a>
+				<div class="cd-faq-content">
+					<p>{{ q_and_a.response  }}</p>
+				</div> <!-- cd-faq-content -->
+			</li>
+		</ul> <!-- cd-faq-group -->
+	</div> <!-- cd-faq-items -->
+
+	 {% endfor %}
+	
+</section> <!-- cd-faq -->
+
+
+
+
+<script src="{% static 'faq/js/jquery-2.1.1.js' %} "></script>
+<script src="{% static 'faq/js/jquery.mobile.custom.min.js' %} "></script>
+<script src="{% static 'faq/js/main.js' %} "></script>
+</body>
+</html>

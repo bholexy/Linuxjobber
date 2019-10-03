@@ -1,0 +1,102 @@
+{% extends 'home/base.html' %}
+{% block content %}
+
+
+<div class="req" role="listbox">
+        <div class="item active">
+
+            <div class=" text-center projs" >
+       <!-- <h1>Project Videos</h1> -->
+
+            </div>
+          </div>
+		</div>
+
+<style>
+	.ValidationErrors { color:red !important; font-size:15px; }
+</style>
+<div class="container jobforms-req">
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 modal-content">
+		<div class="modal-header">
+		<h2 class="title-4">Senior Level <br> Application Form</h2>
+		</div>
+		
+		<br>
+		
+		<div class="form-group">
+			<p class="space1">First Name</p>
+			<input type="password" class="form-control" placeholder="First name">
+		</div>
+		
+		<div class="form-group">
+			<p class="space1">Last Name</p>
+			<input type="password" class="form-control" placeholder="Last name">
+		</div>
+		<div class="form-group">
+			<p class="space1">Email</p>
+			<input type="email" class="form-control" placeholder="Email address">
+		</div>
+		<div class="form-group">
+			<p class="space1">Highest Level Of Education Completed</p>
+			<select class="form-control" id="sel1">
+				<option>None</option>
+				<option>Some High School</option>
+				<option>High School Diploma</option>
+				<option>Associate Degree</option>
+				<option>Bachelor's Degree</option>
+				<option>Master's Degree</option>
+				<option>Phd</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<p class="space1">Resume / CV</p>
+			<div id="resume" class=""></div>
+			<form action="/action_page.php">
+				<input type="file" name="myFile" multiple>
+			  </form>
+		</div>
+		<br>
+		<div class="sldbtnd">
+			<input type="submit" class="btn btn-primary btn-bd" value="Submit" style="background-color: #0066cc; border-radius: 34px;!important">
+			<input type="submit" class="btn btn-default btn-md" value="Cancel" style="border-radius: 34px;!important">
+		</div>
+		<br>
+		</div>
+		
+		<div class="col-md-2"></div>
+	</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+jQuery(function(){ 
+	$("#firstname").validate({
+		 expression: "if (VAL) return true; else return false;",
+		message: "Please enter your first name"
+	});$("#lastname").validate({
+		 expression: "if (VAL) return true; else return false;",
+		message: "Please enter your last name"
+	});$("#email").validate({
+		 expression: "if (VAL) return true; else return false;",
+		message: "Please enter email address"
+	});$("#education").validate({
+		 expression: "if (VAL) return true; else return false;",
+		message: "Please enter highest level of education completed"
+	});
+	$("input[type='checkbox']").change(function () {
+		
+			if(this.checked){
+				$("input[type='file']").attr('required', true);
+				$("#resume").show("slow");
+			}
+			else{
+				$("input[type='file']").removeAttr('required', '');
+				$("#resume").hide("slow");
+			}
+		 });
+});
+</script>
+
+{% endblock %}

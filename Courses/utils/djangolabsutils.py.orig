@@ -1,0 +1,378 @@
+import zipfile
+import os
+import sys
+import shutil
+import glob
+import subprocess
+import re
+
+
+from Courses.models import Lab, GradesReport
+
+
+from Courses.models import Lab, GradesReport
+
+
+from tempfile import mkstemp
+from shutil import move
+from os import fdopen, remove
+
+from selenium import webdriver
+
+os.environ.setdefault("_SETTINGS_MODULE","server.settings")
+
+
+############################################################################################################################################################
+# Construction of projects directories/paths.
+############################################################################################################################################################
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+APPLICATION_DIR = os.path.join(BASE_DIR, 'Courses')
+PROJECT_DIR = os.path.join(BASE_DIR, 'Linuxjobber')
+PROJECT_MEDIA_DIR = os.path.join(BASE_DIR, 'media'+ '\\uploads') # Directory that contains projects media
+MEDIA_DIR = os.path.join(APPLICATION_DIR, 'media') #Directory that contains media exclucive to DjangoLabs Application
+VERIFYD_BASE_DIR = os.path.join(BASE_DIR, 'verifyd') #Project to install and launch packaged django applications.
+VERIFYD_PROJECT_DIR = os.path.join(VERIFYD_BASE_DIR, 'verifyd') #Verifyd project directory containing the settings.py and urls.py
+
+############################################################################################################################################################
+
+
+#--------------------------------------------------------------------------------------------------------
+#FUNCTIONS
+#--------------------------------------------------------------------------------------------------------
+def replace(file_path, pattern, subst):
+	fh, abs_path = mkstemp()
+	with fdopen(fh,'w') as new_file:
+		with open(file_path) as old_file:
+			for line in old_file:
+				new_file.write(line.replace(pattern,subst))
+	remove(file_path)
+	move(abs_path, file_path)
+
+def launch_selenium():
+	grade = ''
+	print ("before webdriver" + file_upload)
+	driver = webdriver.Chrome(os.path.join(BASE_DIR, 'chromedriver.exe'))
+	print ("after webdriver" + file_upload)
+
+	driver.get("http://127.0.0.1:8000/{}".format(app_name))
+
+	html = driver.execute_script("return document.body.innerHTML;")
+	html = html.lower()
+	if html.find('hello world'):		
+		grade = "Passed"
+		print('Passed')
+	else:
+		print('Failed')
+		grade = 'Failed'
+	return (grade)
+
+#-------------------------------------------------------------------------------------------------------
+
+
+
+
+<<<<<<< HEAD
+def handle_lab7_uploaded_file(file, lab_number, current_user):
+=======
+def handle_lab6_uploaded_file(file, lab_number, current_user):
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+	file_name = file.name
+	file_upload =  os.path.join(PROJECT_MEDIA_DIR, file.name)
+	app_name = current_user.last_name + 'scrumy'
+	grade = ''
+<<<<<<< HEAD
+	my_list = ''
+
+
+	print ("Installing " + file_name +"...")
+=======
+
+	os.chdir(PROJECT_DIR)
+	print ("before pip" + file.name + file_upload)
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+	subprocess.call([sys.executable, "-m", "pip", "install", file_upload])
+	print ("File Installed")
+	os.system('python manage.py makemigrations')
+	os.system('python manage.py migrate')
+
+
+	with open(PROJECT_DIR + '\\settings.py', 'r') as settings_file:
+		for eachline in settings_file:
+			if eachline.rstrip('\n') == "    "+"'"+app_name+"'"+",":
+				my_list = eachline
+
+	
+	print('mylist == '+ my_list)
+
+	if my_list != '':
+
+<<<<<<< HEAD
+		grade = ''
+		mark = 0
+
+		print ("Initializing webdriver...")
+		driver = webdriver.Chrome(os.path.join(BASE_DIR, 'chromedriver.exe'))
+		print ("webdriver initialized")
+
+		driver.get("http://127.0.0.1:8000/"+app_name)
+
+		#html = driver.execute_script("return document.body.innerHTML;")
+		html = driver.find_element_by_xpath('//body').get_attribute('innerHTML')
+		
+		
+		if html.rstrip('\n').lower() == 'hello world':
+			grade = "Passed"
+			mark = 100
+			print('Passed')
+		else:
+			print('Failed')
+			grade = 'Failed'
+			mark = 0
+
+
+		lab = Lab.objects.get(lab_number = lab_number)
+		report = GradesReport(score = mark, lab = lab, user_id = current_user, grade = grade)
+		report.save()
+	else:
+		grade = ''
+		mark = 0
+
+		replace(os.path.join(PROJECT_DIR, 'settings.py'), 'INSTALLED_APPS = [', "INSTALLED_APPS = [\n    '"+app_name+"',")
+		replace(os.path.join(PROJECT_DIR, 'urls.py'), 'urlpatterns = [', "urlpatterns = [\n    path('"+ app_name +"/', include('"+ app_name +".urls')),")
+		
+
+		#os.system('python manage.py makemigrations')
+		#os.system('python manage.py migrate')
+
+		print ("Initializing webdriver...")
+		driver = webdriver.Chrome(os.path.join(BASE_DIR, 'chromedriver.exe'))
+		print ("webdriver initialized")
+
+
+		driver.get("http://127.0.0.1:8000/"+app_name)
+		html = driver.find_element_by_xpath('//body').get_attribute('innerHTML')
+
+
+		if html.rstrip('\n').lower() == 'hello world':
+			grade = "Passed"
+			mark = 100
+			print('Passed')
+		else:
+			print('Failed')
+			grade = 'Failed'
+			mark = 0
+
+
+		lab = Lab.objects.get(lab_number = lab_number)
+		report = GradesReport(score = mark, lab = lab, user_id = current_user, grade = grade)
+		report.save()
+
+=======
+	html = driver.execute_script("return document.body.innerHTML;")
+	html = html.lower()
+	if html.find('hello world'):		
+		grade = "Passed"
+		print('Passed')
+	else:
+		print('Failed')
+		grade = 'failed'
+	lab = Lab.objects.get(lab_number = lab_number)
+	report = GradesReport(score = grade, lab = lab, user_id = current_user, grade = grade)
+	report.save()
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+	return (grade)
+
+
+
+
+def handle_lab6_uploaded_file(file, lab_number, current_user):
+
+	match_count = 0
+	db_file = file.name
+
+	if db_file.endswith('.sql'):
+		try:
+			with open(PROJECT_MEDIA_DIR + '\\'+ db_file, 'r') as lab_file:
+				for each_line in lab_file:
+					if each_line.rstrip('\n') == "INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES":
+						match_count += 1
+			value = ''
+			grade = 100 * match_count/1
+			if grade <= 69:
+				value = "failed"
+			else:
+				value = "passed"
+			lab = Lab.objects.get(lab_number = lab_number)
+			report = GradesReport(score = grade, lab = lab, user_id = current_user, grade = value)
+			report.save()
+		except IOError:
+			print('An error has just occured')
+			grade = 99999
+		else:
+			print('-----File processing was successful')
+		os.remove(PROJECT_MEDIA_DIR + '\\' + db_file)
+	else:
+		print('Please Ensure that you have exported your database in a (.sql) format.')
+		grade = 99999
+
+	return (grade)
+
+
+
+<<<<<<< HEAD
+def handle_lab5_uploaded_file(file, lab_number, current_user):
+=======
+def handle_lab4_uploaded_file(file, lab_number, current_user):
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+	match_count = 0
+	db_file = file.name
+
+	if db_file.endswith('.sql'):
+		try:
+			with open(PROJECT_MEDIA_DIR + '\\'+ db_file, 'r') as lab_file:
+				for each_line in lab_file:
+					if each_line.rstrip('\n') == "CREATE TABLE IF NOT EXISTS `django_migrations` (" or each_line.rstrip('\n') == "CREATE TABLE IF NOT EXISTS `django_admin_log` (" or each_line.rstrip('\n') == "CREATE TABLE IF NOT EXISTS `django_session` (":
+						match_count += 1
+			
+<<<<<<< HEAD
+			grade = 100 * match_count/3
+=======
+			grade = 100 * match_count/10
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+			value = ''
+			if grade <= 69:
+				value = "failed"
+			else:
+				value = "passed"
+			lab = Lab.objects.get(lab_number = lab_number)
+			report = GradesReport(score = grade, lab = lab, user_id = current_user, grade = value)
+			report.save()
+		except IOError:
+			print('An error has just occured')
+			grade = 99999
+		else:
+			print('-----File processing was successful')
+		os.remove(PROJECT_MEDIA_DIR + '\\' + db_file)
+	else:
+		print('Please Ensure that you have exported your database in a (.sql) format.')
+		grade = 99999
+
+	return (grade)
+
+
+
+
+<<<<<<< HEAD
+def handle_lab4_uploaded_file(file, lab_number, current_user):
+=======
+def handle_lab3_uploaded_file(file, lab_number, current_user):
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+
+	count = 0
+	grade = 0
+
+
+
+	if file.name == 'settings.py':
+		
+		try:
+			with open(PROJECT_MEDIA_DIR + '\\settings.py', 'r') as settings_file:
+				for eachline in settings_file:
+					if eachline.rstrip('\n') == "        'ENGINE': 'django.db.backends.sqlite3'," or eachline.rstrip('\n') == "        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),":
+						count += 1
+			grade = 100 * count/2
+
+			value = ''
+			if grade <= 69:
+				value = "failed"
+			else:
+				value = "passed"
+			lab = Lab.objects.get(lab_number = lab_number)
+			report = GradesReport(score = grade, lab = lab, user_id = current_user, grade = value)
+			report.save()
+
+		except IOError:
+			grade = 99999
+		else:
+			print('File was processed successfully')
+		os.remove(PROJECT_MEDIA_DIR + '\\settings.py')
+	else:
+		grade = 99999
+	return (grade)
+
+
+
+
+<<<<<<< HEAD
+def handle_lab3_uploaded_file(file, surname, lab_number, current_user):
+=======
+def handle_lab2_uploaded_file(file, surname, lab_number, current_user):
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+	zfile = ''
+	zfile_name = file.name
+	exfile_name = zfile_name.rstrip('.zip')
+	message = ''
+	task_1= 0
+	task_3 = 0
+	task_4 = 0
+	task_5 = 0
+	task_6 = 0
+	grade = 0
+
+
+	if zfile_name.endswith('.zip'):	
+		try:
+			zfile = zipfile.ZipFile(file)
+		except zipfile.BadZipfile as ex:
+			print("%s no a zip file" % file)
+
+		ret = zfile.testzip()
+	
+		if ret is not None:
+			grade = 88888
+			print("%s is a bad zip file, error: %s" % file, ret)
+		else:
+			lab_docs = zfile.extractall(MEDIA_DIR)
+
+			for root, dirs, files in os.walk(MEDIA_DIR):
+				for dirnames in dirs:
+					if dirnames == 'myscrumy':
+						task_1 += 1
+				for dirnames in dirs:
+					if dirnames == surname + 'scrumy':
+						task_3 += 1
+				for file in files:
+					if file.endswith('dmin.py') or file.endswith('odels.py') or file.endswith('iews.py') or file.endswith('ests.py') or file.endswith('pps.py'):
+						task_3 += 1
+				for file in files:
+					if file.endswith('rls.py'):
+						task_4 += 1
+
+			with open(MEDIA_DIR + r'\\myscrumy\\myscrumy\\urls.py', 'r') as project_url:
+				for eachline in project_url:
+					if eachline.rstrip('\n') == "    path('"+surname+"scrumy/', include("+'"'+surname+'scrumy.urls")),' or eachline.rstrip('\n') == "    path('"+surname+"scrumy/', include('"+surname+"scrumy.urls'))," or eachline.rstrip('\n') == '    path("'+surname+'scrumy/", include('+"'"+surname+"scrumy.urls'))," or eachline.rstrip('\n') == '    path("'+surname+'scrumy/", include("'+surname+'scrumy.urls")),':
+						task_5 += 1
+
+			with open(MEDIA_DIR + '\\myscrumy\\'+surname+'scrumy\\urls.py', 'r') as app_url:
+				for eachline in app_url:
+					if eachline.rstrip('\n') == "    path('', views.index)," or eachline.rstrip('\n') == '    path("", views.index),':
+						task_6 += 1
+			shutil.rmtree(MEDIA_DIR+'\\myscrumy')
+
+			grade = 100* (task_1 + task_3 + task_4 + task_5 + task_6)/12
+
+			value = ''
+			if grade <=69:
+				value = "failed"
+			else:
+				value = "passed"
+			lab = Lab.objects.get(lab_number = lab_number)
+			report = GradesReport(score = grade, lab = lab, user_id = current_user, grade = value)
+			report.save()
+	else:
+		grade = 99999
+
+
+	
+
+	return(grade)

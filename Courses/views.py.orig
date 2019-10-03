@@ -1,0 +1,335 @@
+import os
+import re
+
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.http import JsonResponse, HttpResponse
+from django.views import generic
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+#################################################
+#	IMPORTS FROM WITHIN Linuxjobber APPLICATION  #
+
+from Courses.models import LabTasks, Lab, Course, CourseTopic
+from Courses.forms import DocumentUploadForm
+from Courses.utils.djangolabsutils import *
+
+#################################################
+
+from django import template
+from django.conf import settings
+
+
+register = template.Library()
+
+
+def courses(request):
+	if not request.user.is_authenticated:
+		return redirect("/courses/login")
+	else:
+		courses = Course.objects.all()
+		context ={
+				'courses': courses		
+				}
+	return render(request, 'courses/courses.html', context)
+
+class ListCourseTopicView(generic.ListView):
+	template_name = 'courses/topics.html'
+	context_object_name = 'all_course_topics'
+
+	def get_queryset(self):
+		return CourseTopic.objects.filter(course = self.kwargs.get('course_id'))
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['course'] = Course.objects.get(id = self.kwargs.get('course_id'))
+		print(context)
+		return context
+
+
+class DetailCourseTopicView(generic.DetailView):
+	template_name = 'courses/tasks.html'
+	model = CourseTopic
+	form_class = DocumentUploadForm
+
+	def get_context_data(self, **kwargs):
+		list_topic_view_instance = ListCourseTopicView()
+
+		context = super().get_context_data(**kwargs)
+
+		context['form'] = DocumentUploadForm()
+
+		#get topic details
+		topicid = CourseTopic.objects.get(id = self.kwargs.get('pk'))
+
+		context['course'] = Course.objects.get(id = topicid.course_id)
+
+		#query labs		
+		context['labs_pk'] =  context['course'].coursetopic_set.all()
+
+		#Get type
+		if(topicid.course_id == settings.LINUXFUNDAMENTALS):
+			context['type'] = 1
+		elif(topicid.course_id== settings.LINUXPROFICIENCY):
+			context['type'] = 2
+		elif(topicid.course_id == settings.PYTHON):
+			context['type'] = 3
+		elif(topicid.course_id == settings.PYTHON):
+			context['type'] = 4
+
+
+		# context['lab'] = Lab.objects.filter(topic_id = topicid)
+		print(context)
+		return context
+
+
+
+
+
+	def post(self, request, *args, **kwargs):
+			object = super().get_object()
+			form = DocumentUploadForm(request.POST, request.FILES)
+			form.save()
+<<<<<<< HEAD
+			if form.is_valid() and str(object.id) == '3':
+=======
+			if form.is_valid() and str(object.id) == '2':
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+				#<process form cleaned data>
+				if request.user.is_authenticated :
+					current_user = request.user
+					surname = current_user.last_name
+<<<<<<< HEAD
+					output = handle_lab3_uploaded_file(request.FILES['document'], surname, str(object.id), current_user)
+=======
+					output = handle_lab2_uploaded_file(request.FILES['document'], surname, str(object.id), current_user)
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+					if output == 99999:
+						return HttpResponse("Please ensure that you have uploaded a zip file and that the name of your application matches yoursurname+scrumy\n Your surname should match the lastname you specified at the time of account creation")
+					elif output == 88888:
+						return HttpResponse("The Zipfile you uploaded is bad or corrupted please upload a good one")
+					else:
+<<<<<<< HEAD
+=======
+						return HttpResponse('Out of 100% Your Lab 2 score is: ' + str(output) + '\n <a href="/courses/topics/1/">click here to proccede with other labs</a>')
+			elif form.is_valid() and str(object.id) == '3':
+				#<process form cleaned data>
+				if request.user.is_authenticated :
+					current_user = request.user
+					output = handle_lab3_uploaded_file(request.FILES['document'], str(object.id), current_user)
+					if output == 99999:
+						return HttpResponse("Please ensure that you have uploaded your projects settings file. \n <a href='/courses/topicdetail/3/'>Click here to try again</a>")
+					else:
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+						return HttpResponse('Out of 100% Your Lab 3 score is: ' + str(output) + '\n <a href="/courses/topics/1/">click here to proccede with other labs</a>')
+			elif form.is_valid() and str(object.id) == '4':
+				#<process form cleaned data>
+				if request.user.is_authenticated :
+					current_user = request.user
+					output = handle_lab4_uploaded_file(request.FILES['document'], str(object.id), current_user)
+					if output == 99999:
+<<<<<<< HEAD
+						return HttpResponse("Please ensure that you have uploaded your projects settings file. \n <a href='/courses/Django/labs/4/'>Click here to try again</a>")
+=======
+						return HttpResponse("Please Ensure that the file you are uploading is a .sql export of your database\n <a href='/courses/topicdetail/4/'>Click here to try again</a>")
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+					else:
+						return HttpResponse('Out of 100% Your Lab 4 score is: ' + str(output) + '\n <a href="/courses/topics/1/">click here to proccede with other labs</a>')
+			elif form.is_valid() and str(object.id) == '5':
+				#<process form cleaned data>
+				if request.user.is_authenticated :
+					current_user = request.user
+					output = handle_lab5_uploaded_file(request.FILES['document'], str(object.id), current_user)
+					if output == 99999:
+						return HttpResponse("Please Ensure that the file you are uploading is a .sql export of your database\n <a href='/courses/topicdetail/5/'>Click here to try again</a>")
+					else:
+						return HttpResponse('Out of 100% Your Lab 5 score is: ' + str(output) + '\n <a href="/courses/topics/1/">click here to proccede with other labs</a>')
+			elif form.is_valid() and str(object.id) == '6':
+				#<process form cleaned data>
+				if request.user.is_authenticated :
+					current_user = request.user
+					output = handle_lab6_uploaded_file(request.FILES['document'], str(object.id), current_user)
+<<<<<<< HEAD
+					if output == 99999:
+						return HttpResponse("Please Ensure that the file you are uploading is a .sql export of your database\n <a href='/courses/Django/labs/6/'>Click here to try again</a>")
+					else:
+						return HttpResponse('Out of 100% Your Lab 6 score is: ' + str(output) + '\n <a href="/courses/topics/1/">click here to proccede with other labs</a>')
+			elif form.is_valid() and str(object.id) == '7':
+				#<process form cleaned data>
+				if request.user.is_authenticated :
+					current_user = request.user
+					output = handle_lab7_uploaded_file(request.FILES['document'], str(object.id), current_user)
+					if output is 'Failed':
+						return HttpResponse("You did not pass the Lab.\n <a href='/courses/Django/labs/7/'>Click here to try again</a>")
+					else:
+						return HttpResponse('You passed the Lab \n <a href="/courses/topics/1/">click here to proccede with other labs</a>')
+			elif form.is_valid() and str(object.id) == '8':
+				#<process form cleaned data>
+				print('hi')
+=======
+					if output is 'failed':
+						return HttpResponse("You did not pass the Lab.\n <a href='/courses/topicdetail/6/'>Click here to try again</a>")
+					else:
+						return HttpResponse('You passed the Lab \n <a href="/courses/topics/1/">click here to proccede with other labs</a>')
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+			else:
+				return HttpResponse("Invalid Request")
+			
+ 
+
+def labdetails(request, lab_id):
+	type = False
+	labtask = LabTasks.objects.filter(lab_id = lab_id)
+	topic = CourseTopic.objects.get(id = lab_id)
+	print(topic.id)
+	if(topic.id == settings.LINUXFUNDAMENTALS):
+		type = 1
+	elif(topic.id == settings.LINUXPROFICIENCY):
+		type = 2
+	elif(topic.id == settings.PYTHON):
+		type = 3
+	elif(topic.id == settings.PYTHON):
+		type = 4
+
+
+	course = Course.objects.get(id = topic.course_id)
+	context ={
+			'course': course,
+			'topic': topic,
+			'labtask': labtask,
+			'type': type,
+			'form' : DocumentUploadForm()
+			}
+	print(settings.LINUXFUNDAMENTALS)
+	return render(request, 'courses/topic_detail.html', context)
+
+class ListLabsView(generic.ListView):
+	template_name = 'courses/labs.html'
+	context_object_name = 'all_django_labs'
+	paginate_by = 5
+
+	def get_queryset(self):
+		return Course.objects.filter(id = self.kwargs.get('course_id'))
+	
+
+
+class DetailLabView(generic.DetailView):
+	model = LabTasks
+	template_name = 'labs/detail.html'
+	form_class = DocumentUploadForm
+	labtasks_paginate_by = 5
+
+
+	def post(self, request, *args, **kwargs):
+		object = super().get_object()
+		form = DocumentUploadForm(request.POST, request.FILES)
+		form.save()
+		if form.is_valid() and str(object.lab_number) == '2':
+			#<process form cleaned data>
+			output = handle_lab2_uploaded_file(request.FILES['document'], request.POST.get("username"))
+			return HttpResponse('Out of 100% Your Lab 2 score is: ' + str(output))
+		elif form.is_valid() and str(object.lab_number) == '3':
+			#<process form cleaned data>
+			output = handle_lab3_uploaded_file(request.FILES['document'])
+			return HttpResponse('Out of 100% Your Lab 3 score is: ' + str(output))
+		elif form.is_valid() and str(object.lab_number) == '4':
+			#<process form cleaned data>
+			output = handle_lab4_uploaded_file(request.FILES['document'])
+			return HttpResponse('Out of 100% Your Lab 4 score is: ' + str(output))
+		elif form.is_valid() and str(object.lab_number) == '5':
+			#<process form cleaned data>
+			output = handle_lab5_uploaded_file(request.FILES['document'])
+			return HttpResponse('Out of 100% Your Lab 5 score is: ' + str(output))
+		else:
+			# pass
+			return HttpResponse('Test not passed')
+
+
+
+
+
+	def get_context_data(self, **kwargs):
+		list_labs_view_instance = ListLabsView()
+
+        # Call the base implementation first to get a context
+		context = super().get_context_data(**kwargs)
+		#Add document upload form to template
+		context['form'] = DocumentUploadForm()
+		#query labs		
+		context['labs_pk'] = list_labs_view_instance.get_queryset()
+		#get total number of labs
+		context['number_of_all_labs'] = list_labs_view_instance.get_queryset().count()
+
+		#set pagination
+		# paginator = Paginator(labs_list, 1)
+		# page =  self.request.GET.get('page')
+		# context['page'] = page
+		# context['labs_list'] = Paginator(labs_list, 1)
+		# paginate page here
+		labs_list = list_labs_view_instance.get_queryset()
+		paginator = Paginator(labs_list, 1)
+		page = self.request.GET.get('page', 1)
+
+
+		context['lab_tasks'] =  paginator.page(page)
+
+
+
+
+
+		return context
+
+
+##########################################################################################################################################################################################
+# THIS SECTION CONTAINS VIEWS THAT HANDLE USER ACCOUNTS CREATION AND AUTHENTICATION
+##########################################################################################################################################################################################
+
+#LOGIN VIEW
+def log_in(request):
+
+	if request.method == "POST":
+		user_name = request.POST['username']
+		password = request.POST['password']
+
+		user = authenticate(request, username = user_name, password = password)
+		
+		if user is not None:
+			login(request, user)
+			return redirect("/courses/all/courses")
+		else:
+			error_message = "yes"
+			return render(request, "courses/login.html", {'error_message' : error_message})
+	else:
+		return render(request, "courses/login.html")
+
+#LOGOUT VIEW
+def log_out(request):
+	logout(request)
+	return redirect("/courses")
+
+
+#SIGNUP VIEW
+def sign_up(request):
+
+	if request.method == "POST":
+		
+		firstname = request.POST['firstname']
+		lastname = request.POST['lastname']
+		email = request.POST['email']
+		password = request.POST['password']
+		username = request.POST['username']
+
+		if re.match("^[a-zA-Z]*$", firstname) and re.match("^[a-zA-Z]*$", lastname):
+
+			user = User.objects.create_user(username, email, password)
+			user.first_name = firstname
+			user.last_name = lastname
+			user.save()
+			return render(request, "courses/success.html")
+		else:
+			error = True
+			return render(request, 'courses/signup.html', {'error':error})
+	else:
+		return render(request, 'courses/signup.html')

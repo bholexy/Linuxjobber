@@ -1,0 +1,9 @@
+include LICENSE
+include README.rst
+include asset/styles.css
+recursive-include docs *
+recursive-include asset/home *
+recursive-include asset/img *
+recursive-include Courses/utils *
+recursive-include Courses/templates *
+recursive-include home/templates *

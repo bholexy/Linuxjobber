@@ -1,0 +1,36 @@
+{% extends 'home/base.html' %}
+{% block content %}
+
+<div class="req" role="listbox">
+    <div class=" text-center projs" >
+  
+    </div>
+</div>
+
+<section>
+<div class="container">
+<div class="row">
+	<div class="col-md-2"></div>
+	<br>
+	<div class="col-md-8 modal-content mid">
+		<div class="modal-head">
+		<br>
+		<h2>Job Requirement Not Met</h2>
+		</div>
+		<hr>
+		<?php echo $this->Session->flash(); ?>
+		<p class="req-p">Click the Apply Now button below for placement to junior level role.</p><br>
+		<div class="sldbtnd">
+		<a href="<?php echo SITEURL ?>Jobplacements/apply_jnr" class="btn btn-primary get">Apply Now</a>
+		<?php echo $this->Html->link(__('No'),array('controller'=>'Jobplacements', 'action'=>'index'), array('class' => 'btn pull-right can'));?>
+		</div>
+		<br>
+	</div>
+	<div class="col-md-2"></div>
+</div>
+</div>
+</section>
+<br>
+
+
+{% endblock %}

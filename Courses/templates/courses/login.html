@@ -1,0 +1,54 @@
+
+
+{% extends 'courses/base.html' %}
+
+{% block title %}
+	 Linuxjobber Login
+{% endblock %}
+
+
+{% block head %}
+	Login
+{% endblock %}
+
+
+
+{% block content %}
+
+	<br><br>
+	<div class='form-group'>
+		<form action="" method="post">
+			{% csrf_token %}
+			<p>
+	    		<input type="text" placeholder="Enter Username" id="username" name="username" class='form-control white-border ErrorField' required>
+	    	</p>
+	    	<p>
+				<input type="password" placeholder="Enter Password" name="password" class='form-control white-border ErrorField' required>
+			</p>
+			<p>
+				<button type="submit" class="btn btn-loginform text-white title" style="cursor:pointer; background-color: blue;">Login</button>
+			</p>
+			<br>
+			{% if error_message %}
+				<br><span id="error" >Your username and password didn't match please try again </span>
+			{% endif %}
+	    	<span id= ""><a href="#">Forgot password?</a></span> <span id= ""><a href="{% url 'Courses:signup' %}">Create new account</a></span> 
+		</form>
+	</div>
+
+
+{% endblock %}
+
+
+
+
+	
+
+
+	
+
+
+
+		
+
+

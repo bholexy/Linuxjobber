@@ -1,0 +1,24 @@
+from django.contrib import admin
+
+from .models import Lab, LabTasks, GradesReport, Course, CourseTopic
+
+
+
+admin.site.register(Lab)
+
+admin.site.register(LabTasks)
+
+# admin.site.register(LabComments)
+
+# admin.site.register(LabNotes)
+
+<<<<<<< HEAD
+=======
+#admin.site.register(Grades)
+
+>>>>>>> 7145394efaf8559b2dd93eb65e493cdcadbcc4cc
+admin.site.register(GradesReport)
+
+admin.site.register(Course)
+
+admin.site.register(CourseTopic)

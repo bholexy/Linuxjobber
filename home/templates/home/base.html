@@ -1,0 +1,378 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>{% block title %} {% endblock %}</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700"
+	rel="stylesheet">
+
+<!-- Bootstrap -->
+<link href="{% static 'home/css/newdesigner/css/bootstrap.min.css' %}"
+	rel="stylesheet">
+<!-- Main Style -->
+<link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+<link href="{% static 'home/css/newdesigner/css/style.css' %}"
+	rel="stylesheet">
+<link href="{% static 'home/css/newhomepage/css/stylenew.css' %}"
+	rel="stylesheet}">
+<link href="{% static 'home/css/newhomepage/css/newstyle2.css' %}"
+	rel="stylesheet">
+<link href="{% static 'home/css/newhomepage/css/main.css' %}"
+	rel="stylesheet">
+<link href="{% static 'home/css/newhomepage/css/newstylenew.css' %}"
+	rel="stylesheet">
+<!-- <link href="{% static 'home/css/newhomepage/css/my-style.css' %}" rel="stylesheet"> -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400"
+	rel="stylesheet">
+
+<!-- FAQ -->
+<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+	<link href="{% static 'faq/css/reset.css' %}" rel="stylesheet">
+    <link href="{% static 'faq/css/faq_style.css' %}" rel="stylesheet">
+    <script src="{% static 'faq/js/modernizr.js' %} "></script> -->
+
+
+</head>
+
+<body>
+
+	<header class="r-header" id="header">
+		<!-- header bottom -->
+		<div class="header-bottom">
+			<div class="container padd">
+				<div class="row">
+					<div class="col-md-3 col-sm-3 col-xs-6 logo padd">
+						<a class="navbar-brand" href="{% url 'home:index' %}"><img
+							src="{% static 'home/images/logo.png' %}" alt="logo"></a>
+					</div>
+
+					<div class="col-md-6 col-sm-6 mainmnu">
+						<nav>
+							<ul class="nav navbar-nav navbar-right main-nav">
+								<li class="has-dropdown sub-menu course"><a class="b-n"
+									href="javascript:void(0);">Courses</a> <!-- 
+                                 	This list of courses should be automatically generated 
+                                 		from the courses stored in database
+                                 	 -->
+									<div class="dropdowns transparent-style" id="course">
+										<div class="container text-1">
+											{% if courses %}
+												<li>Just one course</li>
+											{% else %}
+											<div class="col-md-3 col-sm-4">
+												<ul class="">
+													<!--li></li-->
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-linux fa-2x"></i></span>Linux Fundamentals</a> <a
+														href="#"><span class="link-icon"><i
+																class="fa fa-linux fa-2x"></i></span>Linux Proficiency</a></li>
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-terminal fa-2x"></i></span>HTML/CSS</a></li>
+												</ul>
+											</div>
+											<div class="col-md-3 col-sm-4">
+												<ul class="">
+													<!--li></li-->
+
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-cloud fa-2x"></i></span>Amazon AWS</a></li>
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-cogs fa-2x"></i></span>PUPPET Training</a></li>
+
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-file-code-o fa-2x"></i></span>JS/AngularJs v4</a></li>
+
+
+
+												</ul>
+											</div>
+											<div class="col-md-3 col-sm-4">
+												<ul class="">
+													<!--li></li-->
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-server fa-2x"></i></span>RHCSA</a></li>
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-file-code-o fa-2x"></i></span>Java</a></li>
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-lock fa-2x"></i></span>Cybersecurity</a></li>
+
+												</ul>
+											</div>
+											<div class="col-md-3 col-sm-4">
+												<ul class="">
+
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-pencil-square-o fa-2x"></i></span>Independent
+															Authors</a></li>
+
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-line-chart fa-2x"></i></span>Business Analysis</a></li>
+
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-server fa-2x"></i></span>Database</a></li>
+
+												</ul>
+											</div>
+
+
+
+											<div class="col-md-3 col-sm-4">
+												<ul class="">
+													<li><a href="#"><span class="link-icon"><img
+																src="images/icon5.png" alt="img" /></span>Name </a></li>
+
+												</ul>
+											</div>
+											{% endif %}
+										</div>
+									</div></li>
+								<li class="has-dropdown sub-menu tool"><a class="b-n"
+									href="javascript:void(0);">Tools</a>
+
+									<div class="dropdowns transparent-style" id="tool">
+										<div class="container text-1">
+
+
+											<div class="col-md-4 col-sm-4">
+												<ul>
+
+
+													<li><a href="#"><span class="link-icon"><i
+																class="fa fa-cog fa-2x"></i></span>Monitoring</a></li>
+													<li>
+												</ul>
+											</div>
+
+
+										</div>
+									</div></li>
+
+								<li class="has-dropdown sub-menu company"><a class="b-n"
+									href="javascript:void(0)">Company</a>
+									<div class="dropdowns transparent-style" id="company">
+										<div class="container text-1">
+											<div class="col-md-4 col-sm-6">
+												<ul>
+													<li><a href="<?php echo SITEURL ;?>companys/aboutus"><span
+															class="link-icon"><i class="fa fa-home fa-2x"></i></span>About
+															Us</a></li>
+													<li><a href="<?php echo SITEURL ;?>companys/location"><span
+															class="link-icon"><i
+																class="fa fa-map-marker fa-2x"></i></span>Location</a></li>
+												</ul>
+											</div>
+											<div class="col-md-4 col-sm-6">
+												<ul>
+													<li><a href="<?php echo SITEURL ;?>companys/jobs"><span
+															class="link-icon"><i class="fa fa-suitcase fa-2x"></i></span>Jobs</a></li>
+													<li><a href="<?php echo SITEURL ;?>companys/policy"><span
+															class="link-icon"><i class="fa fa-gavel fa-2x"></i></span>Policies</a></li>
+												</ul>
+											</div>
+											<div class="col-md-4 col-sm-6">
+												<ul>
+													<li><a href="<?php echo SITEURL ;?>companys/contact"><span
+															class="link-icon"><i
+																class="fa fa-phone-square fa-2x"></i></span>Contact Us</a></li>
+												</ul>
+											</div>
+										</div>
+									</div></li>
+
+								<li class=" sub-menu "><a class=""
+									href="javascript:void(0)">Try Free</a></li>
+
+							</ul>
+						</nav>
+
+
+					</div>
+
+					<!-- user -->
+
+
+					{% if aut == False %}
+					<div class="col-md-3 col-sm-3 col-xs-6 header-login">
+						<a href="{% url 'home:login' %}">Log In</a> <a class="active"
+							href="{% url 'home:signup' %}">Sign Up</a>
+					</div>
+					{% endif %}
+					<div class="col-md-3 col-sm-3 col-xs-6 header-login">
+						<h3 style="color: #fff;">{{ current_user }}</h3>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+	{% block content %} {% endblock %}
+
+
+
+
+
+	<!--Footer-->
+	<footer id="footer" class="footer">
+		<section id="footer-lniks">
+			<div class="row" id="footer-row">
+				<div class="col-md-3 col-sm-6">
+					<img src="{% static 'home/images/logo.png' %}">
+				</div>
+
+				<div class="col-md-3 col-sm-6">
+					<h2>Quick Links</h2>
+					<ul class="quick-links" style="margin-top: 26px; font-size: 16px;">
+
+						<li><a href="<?php echo SITEURL; ?>">Home</a></li>
+						<li><a href="<?php echo SITEURL.'companys/aboutus'; ?>">About
+								US</a></li>
+						<li><a href="<?php echo SITEURL.'homes/resume' ?>">Resume
+								Services</a></li>
+						<li><a href="<?php echo SITEURL.'homes/packages'; ?>">Student
+								Packages</a></li>
+						<li><a href="<?php echo SITEURL.'service' ?>">Server
+								Services</a></li>
+						<li><a href="<?php echo SITEURL.'homes/livehelp' ?>">Live
+								help</a></li>
+						<li><a href="<?php echo SITEURL.'Newprojects/' ?>">Projects</a></li>
+					</ul>
+				</div>
+
+
+				<div class="col-md-3 col-sm-6">
+					<ul class="quick-links2" style="margin-top: 26px; font-size: 16px;">
+						<h2>&nbsp;</h2>
+						<li><a href="{% url 'home:faq' %}">FAQ</a></li>
+						<li><a href="<?php echo SITEURL.'companys/contact'; ?>">Contact
+								Us</a></li>
+						<li><a href="{% url 'home:group' %}">Group Class</a></li>
+						<li><a href="<?php echo SITEURL.'homes/liveinstructor'; ?>">In-Person
+								Training</a></li>
+						<li><a href="{% url 'home:workexperience' %}">Work
+								Experience</a></li>
+						<li><a href="<?php echo SITEURL.'users/gainExperience' ?>">Gain
+								Experience</a></li>
+						<li><a href="{% url 'home:jobplacements' %}">Job
+								Placement Program</a></li>
+					</ul>
+				</div>
+
+
+				<div class="col-md-3 col-sm-6">
+					<h2>Contact Us</h2>
+					<ul class="quick-links" style="margin-top: 26px; font-size: 16px;">
+						<li><i class="fa fa-map-marker fa-fw pull-left"></i>
+						<p style="color: #fff;">Address : Suite 700, 6301 Ivy</p></li>
+						<li><p style="color: #fff;">Lane, Greenbelt, Maryland
+							<p></li>
+						<li><i class="fa fa-envelope fa-fw pull-left"></i>
+						<p style="color: #fff;">Email: admin@linuxjobber.com</p></li>
+						<!-- li><i class="fa fa-phone fa-fw pull-left"></i><p style=" color:#fff;">Call : 1 443 631 7208</p></li -->
+					</ul>
+				</div>
+			</div>
+
+
+		</section>
+		<br> <br>
+		<section class="footer-center text-center">
+			<ul class="social-links">
+				<li><a href="https://www.facebook.com/linuxjobber"><i
+						class="fa fa-facebook fa-fw"></i></a></li>
+				<li><a href="https://www.twitter.com/linuxjobber"><i
+						class="fa fa-twitter fa-fw"></i></a></li>
+				<li><a href="#link"><i class="fa fa-instagram fa-fw"></i></a></li>
+				<li><a href="https://www.linkedin.com/company/linuxjobber"><i
+						class="fa fa-linkedin fa-fw"></i></a></li>
+				<li><a href=""><i class="fa fa-google-plus fa-fw"></i></a></li>
+			</ul>
+			<br> <br> ©2018 LinuxJobber Inc. All rights reserved
+		</section>
+	</footer>
+	<!--/ Footer-->
+
+
+
+
+
+
+
+	<script src="{% static 'home/css/newdesigner/js/bootstrap.min.js' %}"></script>
+
+
+	<script async
+		src="https://www.googletagmanager.com/gtag/js?id=UA-114043971-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-114043971-1');
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var flag = 0;
+			$(".sub-menu").hover(function() {
+				$(".transparent-style").hide();
+				$("#header").removeClass("result_hover");
+			});
+			$(".course").click(function() {
+
+				$("#header").toggleClass("result_hover");
+				$("#course").toggle();
+			});
+			$(".tool").click(function() {
+
+				$("#header").toggleClass("result_hover");
+				$("#tool").toggle();
+			});
+
+			$(".company").click(function() {
+
+				$("#header").toggleClass("result_hover");
+				$("#company").toggle();
+			});
+
+			$(".profile").click(function() {
+
+				$("#header").toggleClass("result_hover");
+				$("#profile").toggle();
+			});
+
+			$(".admin").click(function() {
+
+				$("#header").toggleClass("result_hover");
+				$("#admin").toggle();
+			});
+
+		});
+	</script>
+
+	<script src="{% static "faq/js/jquery-2.1.1.js" %} "></script>
+	<script src="{% static "faq/js/jquery.mobile.custom.min.js" %} "></script>
+	<script src="{% static "faq/js/main.js" %} "></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}
+     Linuxjobber Signup
+{% endblock %}
+
+
+{% block head %}
+    Create a free account
+{% endblock %}
+
+
+
+{% block content %}
+
+<br>
+
+<div>
+
+    <form method="post" action="">
+        {% csrf_token %}
+
+        <input type="text" name="firstname" placeholder="Firstname" class='form-control white-border ErrorField' required>
+        <br>
+        <input type="text" name="lastname" placeholder="Lastname" class='form-control white-border ErrorField' required>
+        <br>
+        <input type="text" name="email" placeholder="Email" class='form-control white-border ErrorField' required>
+        <br>
+        <input type="text" name="username" placeholder="Username" class='form-control white-border ErrorField' required>
+        <br>
+            <input type="text" name="password" placeholder="Password" class='form-control white-border ErrorField' required>
+        <br>
+
+        {% if error %}
+
+            <p style='color: red;'>Firstname or Lastname cannot contain numbers or special characters</p>
+
+        {% endif %}
+
+        <div>
+            <input type="submit" value="Create Account">
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
